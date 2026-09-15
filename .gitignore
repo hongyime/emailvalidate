@@ -40,3 +40,12 @@ skills/
 skills-lock.json
 docs/
 # End AI / editor dot directories (managed via sourcerepo)
+
+# Local address lists, result files and Python environments
+.venv/
+__pycache__/
+*.py[cod]
+/emails.txt
+**/true emails.txt
+**/false emails.txt
+**/unknown emails.txt
