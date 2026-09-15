@@ -1,0 +1,9 @@
+{
+  "task": "Repair installed validator contract and preserve uncertain results and previous outputs",
+  "branch": "fix/email-validation-results",
+  "base": "main",
+  "validation": "22 offline tests pass; Python 3.12 dependency compatibility passes; hosted checks required before release",
+  "provider": "py3-validate-email==1.0.5.post2; blacklist updater disabled; format/DNS/SMTP behavior retained",
+  "outputs": "Existing files refused; completed lines flushed; None/operational errors go to unknown; Ctrl+C stops without classifying interrupted address",
+  "scope": "Local CLI and static instructions; no real list access, live DNS/SMTP validation, database migration or Vercel deployment"
+}

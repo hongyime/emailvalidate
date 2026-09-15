@@ -1,33 +1,11 @@
-# AUDIT.md — emailvalidate
+# Audit — emailvalidate
 
-Generated: 20260524
+Updated: 2026-09-15
 
-## 0. FILESYSTEM HEALTH REPORT
-No corrupted, orphaned, or sync artifact files detected.
+The original requirements installed `validate-email==1.3`, while the script called the distinct `py3-validate-email` API. Importing the module immediately opened an address list and started processing. Ambiguous results and a swallowed keyboard interrupt were sent to the invalid-address file, and repeat runs appended duplicates. The prior generic audit did not detect these defects.
 
-## 1. MASTER FEATURE MAP
-| File | Purpose | Key Functions |
-|------|---------|---------------|| validateemail.py | Source file | (see source) |
+The repair pins the intended provider, loads it only when the CLI runs, disables its unused blacklist updater and validates its function signature before opening output files. Definitive validation failures remain distinct from operational/inconclusive results. Input is streamed, completed lines are flushed, existing outputs are refused and interruption stops processing. Duplicate occurrences within the input are intentionally preserved.
 
-## 2. RECONCILIATION SUMMARY
-Small utility project. Documentation matches implementation.
+All 22 synthetic tests pass locally on Python 3.12; installed dependencies are compatible. Cases cover the actual provider API with mocked DNS/SMTP, known/unknown failures, interruption, import behavior, updater suppression, output races and reruns. Linux and Windows hosted checks must pass before release. The existing label workflow is also corrected to use `.github/labels.yml`.
 
-## 3-5. GAPS / GHOSTS / DRIFT
-None identified for this project scope.
-
-## 6. DATA INTEGRITY
-N/A — no databases.
-
-## 7. CODE QUALITY FINDINGS
-| Tag | Description | Severity |
-|-----|-------------|----------|
-| [DEAD] | No dead code detected | N/A |
-
-## 8. STRUCTURAL REORGANIZATION
-No reorganization needed — structure appropriate for project size.
-
-## 9. PRODUCTION READINESS
-N/A — personal/educational utility, not a production service.
-
-## 10. REMEDIATION ROADMAP
-No remediation actions required.
+No real address list or existing result file was read or changed, and no live DNS/SMTP validation was performed. SMTP replies do not guarantee future delivery. Tests establish the mocked contract and file behavior, not deliverability for any real address. This is a local CLI with static GitHub Pages instructions; no Vercel CPU reduction or monthly quota headroom is claimed.
